@@ -1,7 +1,19 @@
-// import App from 'next/app'
+import "../styles/global.css";
+
+import { SWRConfig } from "swr";
+import fetch from "unfetch";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return (
+    <SWRConfig
+      value={{
+        fetcher: (...args: [RequestInfo, RequestInit?]) =>
+          fetch(...args).then((res: Response) => res.json()),
+      }}
+    >
+      <Component {...pageProps} />
+    </SWRConfig>
+  );
 }
 
 // Only uncomment this method if you have blocking data requirements for
